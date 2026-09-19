@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "witherstorm_delight:wither_stove"
+    "witherstorm_delight:wither_stove",
     "witherstorm_delight:command_cooking_pot"
   ]
 }

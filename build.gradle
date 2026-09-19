@@ -165,7 +165,7 @@ dependencies {
     //1.3.4
     //implementation fg.deobf("curse.maven:farmers-delight-398521:8765179")
     implementation fg.deobf("curse.maven:crackers-wither-storm-mod-621405:5619741")
-
+    runtimeOnly fg.deobf("curse.maven:jei-238222:8895264")
     // Example mod dependency with JEI - using fg.deobf() ensures the dependency is remapped to your development mappings
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}")
