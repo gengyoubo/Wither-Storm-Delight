@@ -5,7 +5,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -29,19 +31,20 @@ import net.minecraftforge.registries.ForgeRegistries;
 import show.wsd.mod.init.ModBlock;
 import show.wsd.mod.init.ModItem;
 import vectorwing.farmersdelight.common.Configuration;
-import vectorwing.farmersdelight.common.block.TomatoVineBlock;
 import vectorwing.farmersdelight.common.registry.ModBlocks;
 import vectorwing.farmersdelight.common.registry.ModItems;
 import vectorwing.farmersdelight.common.registry.ModSounds;
-import vectorwing.farmersdelight.common.tag.ModTags;
 
 import javax.annotation.Nullable;
 
-@SuppressWarnings("deprecation")
 public class WitheredTomatoVineBlock extends CropBlock {
     public static final IntegerProperty VINE_AGE = BlockStateProperties.AGE_3;
     public static final BooleanProperty ROPELOGGED = BooleanProperty.create("ropelogged");
     private static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
+    // ModTags.ROPES is not exposed by every Farmer's Delight 1.3.x build.
+    // The data tag itself is stable, so resolve it directly instead.
+    private static final TagKey<Block> FARMERS_DELIGHT_ROPES = TagKey.create(Registries.BLOCK,
+            ResourceLocation.fromNamespaceAndPath("farmersdelight", "ropes"));
 
     public WitheredTomatoVineBlock(Properties properties) {
         super(properties);
@@ -49,7 +52,10 @@ public class WitheredTomatoVineBlock extends CropBlock {
     }
 
     public static void destroyAndPlaceRope(Level level, BlockPos pos) {
-        Block configuredRopeBlock = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(Configuration.DEFAULT_TOMATO_VINE_ROPE.get()));
+        ResourceLocation configuredRopeId = ResourceLocation.tryParse(Configuration.DEFAULT_TOMATO_VINE_ROPE.get());
+        Block configuredRopeBlock = configuredRopeId == null
+                ? null
+                : ForgeRegistries.BLOCKS.getValue(configuredRopeId);
         Block finalRopeBlock = configuredRopeBlock != null ? configuredRopeBlock : ModBlocks.ROPE.get();
 
         level.setBlockAndUpdate(pos, finalRopeBlock.defaultBlockState());
@@ -69,7 +75,7 @@ public class WitheredTomatoVineBlock extends CropBlock {
                 popResource(level, pos, new ItemStack(ModItems.ROTTEN_TOMATO.get()));
             }
 
-            level.playSound(null, pos, ModSounds.ITEM_TOMATO_PICK_FROM_BUSH.get(), SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
+            level.playSound(null, pos, ModSounds.BLOCK_TOMATOES_PICK_TOMATOES.get(), SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
             level.setBlock(pos, state.setValue(getAgeProperty(), 0), 2);
             return InteractionResult.SUCCESS;
         } else {
@@ -101,7 +107,7 @@ public class WitheredTomatoVineBlock extends CropBlock {
         if (random.nextFloat() < 0.3F) {
             BlockPos posAbove = pos.above();
             BlockState stateAbove = level.getBlockState(posAbove);
-            boolean canClimb = Configuration.ENABLE_TOMATO_VINE_CLIMBING_TAGGED_ROPES.get() ? stateAbove.is(ModTags.ROPES) : stateAbove.is(ModBlocks.ROPE.get());
+            boolean canClimb = Configuration.ENABLE_TOMATO_VINE_CLIMBING_TAGGED_ROPES.get() ? stateAbove.is(FARMERS_DELIGHT_ROPES) : stateAbove.is(ModBlocks.ROPE.get());
             if (canClimb) {
                 int vineHeight;
                 for (vineHeight = 1; level.getBlockState(pos.below(vineHeight)).is(this); ++vineHeight) {
@@ -171,7 +177,7 @@ public class WitheredTomatoVineBlock extends CropBlock {
         BlockPos belowPos = pos.below();
         BlockState belowState = level.getBlockState(belowPos);
 
-        if (state.getValue(TomatoVineBlock.ROPELOGGED)) {
+        if (state.getValue(ROPELOGGED)) {
             return belowState.is(ModBlock.WITHERED_TOMATO_CROP.get()) && hasGoodCropConditions(level, pos);
         }
 
@@ -184,7 +190,7 @@ public class WitheredTomatoVineBlock extends CropBlock {
 
     @Override
     public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack stack) {
-        boolean isRopelogged = state.getValue(TomatoVineBlock.ROPELOGGED);
+        boolean isRopelogged = state.getValue(ROPELOGGED);
         super.playerDestroy(level, player, pos, state, blockEntity, stack);
 
         if (isRopelogged) {
@@ -205,7 +211,7 @@ public class WitheredTomatoVineBlock extends CropBlock {
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (!state.canSurvive(level, pos)) {
             level.destroyBlock(pos, true);
-            if (state.getValue(TomatoVineBlock.ROPELOGGED)) {
+            if (state.getValue(ROPELOGGED)) {
                 destroyAndPlaceRope(level, pos);
             }
         }

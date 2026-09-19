@@ -3,7 +3,7 @@
 	"parent": "block/block",
 	"texture_size": [64, 64],
 	"textures": {
-		"tray_top": "farmersdelight:block/tray_top",
+		"tray_top": "farmersdelight:block/tray",
 		"particle": "farmersdelight:block/tray_bottom",
 		"tray_side": "farmersdelight:block/tray_bottom"
 	},

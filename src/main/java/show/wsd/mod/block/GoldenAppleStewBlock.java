@@ -68,12 +68,23 @@ public class GoldenAppleStewBlock extends FeastBlock {
 
         if (servings == 0) {
             levelacc.playSound(null, pos, SoundEvents.LANTERN_BREAK, SoundSource.PLAYERS, 0.8F, 0.8F);
-            levelacc.destroyBlock(pos, true);
-            ItemEntity itemEntity = new ItemEntity((Level) levelacc, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, ModItems.COOKING_POT.get().getDefaultInstance());
-            itemEntity.setPickUpDelay(10);
-            levelacc.addFreshEntity(itemEntity);
 
-            return InteractionResult.SUCCESS;
+            // The feast is already empty at this point.  Remove only the block
+            // and restore its cooking pot on the server; dropping the block
+            // itself here duplicates the feast item and doing this on the
+            // client creates a ghost pot.
+            if (levelacc instanceof Level level && !level.isClientSide) {
+                level.destroyBlock(pos, false);
+                ItemEntity itemEntity = new ItemEntity(level,
+                        pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D,
+                        ModItems.COOKING_POT.get().getDefaultInstance());
+                itemEntity.setPickUpDelay(10);
+                level.addFreshEntity(itemEntity);
+            }
+
+            return levelacc instanceof Level level
+                    ? InteractionResult.sidedSuccess(level.isClientSide)
+                    : InteractionResult.SUCCESS;
         }
 
         ItemStack serving = this.getServingItem(state);

@@ -22,7 +22,7 @@ public class WSDFoodValues {
             .nutrition(22).saturationMod(1.4f)
             .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, BRIEF_DURATION, 0), 1.0F)
             .effect(() -> new MobEffectInstance(ModEffects.NOURISHMENT.get(), LONG_DURATION, 0), 1.0F)
-            .effect(() -> new MobEffectInstance(ModEffects.COMFORT.get(), LONG_DURATION, 0), 1.0F)
+            .effect(() -> new MobEffectInstance(ModEffects.NOURISHMENT.get(), LONG_DURATION, 0), 1.0F)
             .build();
 
     public static final FoodProperties STORM_DINNER = new FoodProperties.Builder()
@@ -50,7 +50,7 @@ public class WSDFoodValues {
 
     public static final FoodProperties EYES_PORRIDGE = new FoodProperties.Builder()
             .nutrition(10).saturationMod(0.7f)
-            .effect(() -> new MobEffectInstance(ModEffects.COMFORT.get(), MEDIUM_DURATION, 1), 1.0F)
+            .effect(() -> new MobEffectInstance(ModEffects.NOURISHMENT.get(), MEDIUM_DURATION, 1), 1.0F)
             .build();
 
     public static final FoodProperties FRIED_RICE = new FoodProperties.Builder()
@@ -89,7 +89,7 @@ public class WSDFoodValues {
             .build();
 
     public static final FoodProperties WITHERED_BONE_BROTH = new FoodProperties.Builder()
-            .nutrition(9).saturationMod(1f).effect(() -> new MobEffectInstance(ModEffects.COMFORT.get(), SHORT_DURATION, 0), 1.0F)
+            .nutrition(9).saturationMod(1f).effect(() -> new MobEffectInstance(ModEffects.NOURISHMENT.get(), SHORT_DURATION, 0), 1.0F)
             .meat()
             .build();
 
@@ -109,7 +109,7 @@ public class WSDFoodValues {
     public static final FoodProperties WITHER_ROSE_PETAL_TEA = new FoodProperties.Builder()
             .effect(() -> new MobEffectInstance(MobEffects.WITHER, BRIEF_DURATION, 0), 1.0F)
             .effect(() -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, MEDIUM_DURATION, 0), 1.0F)
-            .effect(() -> new MobEffectInstance(ModEffects.COMFORT.get(), MEDIUM_DURATION, 1), 1.0F)
+            .effect(() -> new MobEffectInstance(ModEffects.NOURISHMENT.get(), MEDIUM_DURATION, 1), 1.0F)
             .alwaysEat()
             .build();
 }
