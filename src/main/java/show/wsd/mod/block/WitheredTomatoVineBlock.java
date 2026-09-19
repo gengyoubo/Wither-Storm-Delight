@@ -44,7 +44,7 @@ public class WitheredTomatoVineBlock extends CropBlock {
     // ModTags.ROPES is not exposed by every Farmer's Delight 1.3.x build.
     // The data tag itself is stable, so resolve it directly instead.
     private static final TagKey<Block> FARMERS_DELIGHT_ROPES = TagKey.create(Registries.BLOCK,
-            new ResourceLocation("farmersdelight", "ropes"));
+            ResourceLocation.fromNamespaceAndPath("farmersdelight", "ropes"));
 
     public WitheredTomatoVineBlock(Properties properties) {
         super(properties);
@@ -52,7 +52,10 @@ public class WitheredTomatoVineBlock extends CropBlock {
     }
 
     public static void destroyAndPlaceRope(Level level, BlockPos pos) {
-        Block configuredRopeBlock = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(Configuration.DEFAULT_TOMATO_VINE_ROPE.get()));
+        ResourceLocation configuredRopeId = ResourceLocation.tryParse(Configuration.DEFAULT_TOMATO_VINE_ROPE.get());
+        Block configuredRopeBlock = configuredRopeId == null
+                ? null
+                : ForgeRegistries.BLOCKS.getValue(configuredRopeId);
         Block finalRopeBlock = configuredRopeBlock != null ? configuredRopeBlock : ModBlocks.ROPE.get();
 
         level.setBlockAndUpdate(pos, finalRopeBlock.defaultBlockState());

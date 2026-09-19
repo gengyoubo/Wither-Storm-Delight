@@ -6,9 +6,12 @@
     {
       "item": "witherstorm_delight:withered_cabbage"
     },
-    {
-      "tag": "farmersdelight:cabbage_roll_ingredients"
-    }
+    [
+      { "tag": "forge:raw_meat" },
+      { "tag": "forge:raw_fishes" },
+      { "tag": "forge:vegetables" },
+      { "tag": "forge:mushrooms" }
+    ]
   ],
   "recipe_book_tab": "misc",
   "result": {

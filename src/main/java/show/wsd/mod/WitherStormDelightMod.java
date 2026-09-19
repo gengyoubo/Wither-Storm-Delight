@@ -26,7 +26,7 @@ public class WitherStormDelightMod {
     public static final Rarity COMMAND = Rarity.create("COMMAND", ChatFormatting.RED);
     public static final Rarity SYMBIONT = Rarity.create("SYMBIONT", ChatFormatting.DARK_PURPLE);
     private static final Collection<AbstractMap.SimpleEntry<Runnable, Integer>> workQueue = new ConcurrentLinkedQueue<>();
-
+    @SuppressWarnings("removal")
     public WitherStormDelightMod() {
         IEventBus modbus = FMLJavaModLoadingContext.get().getModEventBus();
         ModItem.ITEMS.register(modbus);
