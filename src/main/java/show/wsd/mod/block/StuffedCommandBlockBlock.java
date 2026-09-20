@@ -52,29 +52,27 @@ public class StuffedCommandBlockBlock extends FeastBlock {
         }
 
         int servings = state.getValue(getServingsProperty());
+        if (servings == 1) {
+            level.playSound(null, pos, WitherStormModSoundEvents.COMMAND_BLOCK_DEATH.get(), SoundSource.PLAYERS, 0.5F, 0.5F);
+            level.destroyBlock(pos, false);
+            ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+                    WitherStormModItems.COMMAND_BLOCK_BOOK.get().getDefaultInstance());
+            itemEntity.setPickUpDelay(10);
+            level.addFreshEntity(itemEntity);
+            return InteractionResult.SUCCESS;
+        }
+
         ItemStack serving = this.getServingItem(state);
         ItemStack heldStack = player.getItemInHand(hand);
 
         if (servings > 0) {
             if (!serving.hasCraftingRemainingItem() || ItemStack.isSameItem(heldStack, serving.getCraftingRemainingItem())) {
-                boolean isLastServing = servings == 1;
-                if (isLastServing) {
-                    level.removeBlock(pos, false);
-                } else {
-                    level.setBlock(pos, state.setValue(getServingsProperty(), servings - 1), 3);
-                }
+                level.setBlock(pos, state.setValue(getServingsProperty(), servings - 1), 3);
                 if (!player.getAbilities().instabuild && serving.hasCraftingRemainingItem()) {
                     heldStack.shrink(1);
                 }
                 if (!player.getInventory().add(serving)) {
                     player.drop(serving, false);
-                }
-                if (isLastServing) {
-                    level.playSound(null, pos, WitherStormModSoundEvents.COMMAND_BLOCK_DEATH.get(), SoundSource.PLAYERS, 0.5F, 0.5F);
-                    ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
-                            WitherStormModItems.COMMAND_BLOCK_BOOK.get().getDefaultInstance());
-                    itemEntity.setPickUpDelay(10);
-                    level.addFreshEntity(itemEntity);
                 }
                 level.playSound(null, pos, WitherStormModSoundEvents.COMMAND_BLOCK_ACTIVATES.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
                 return InteractionResult.SUCCESS;
