@@ -12,7 +12,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.BooleanOp;
@@ -32,10 +31,8 @@ public class CookedZombieBlock extends FeastBlock {
     public CookedZombieBlock(Properties properties, Supplier<Item> servingItem, boolean hasLeftovers) {
         super(properties, servingItem, hasLeftovers);
     }
-    protected InteractionResult takeServing(LevelAccessor levelacc, BlockPos pos, BlockState state, Player player, InteractionHand hand) {
-        if (!(levelacc instanceof Level level)) {
-            return InteractionResult.PASS;
-        }
+    @Override
+    protected InteractionResult takeServing(Level level, BlockPos pos, BlockState state, Player player, InteractionHand hand) {
         if (level.isClientSide) {
             return InteractionResult.SUCCESS;
         }
@@ -78,6 +75,6 @@ public class CookedZombieBlock extends FeastBlock {
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return state.getValue(SERVINGS) == 1 ? PLATE_SHAPE : ROAST_SHAPE;
+        return state.getValue(SERVINGS) == 0 ? PLATE_SHAPE : ROAST_SHAPE;
     }
 }

@@ -28,7 +28,7 @@ public class CommandCookingPotItem extends CookingPotItem {
             if (inventory.contains("Items", 9)) {
                 ItemStackHandler handler = new ItemStackHandler();
                 handler.deserializeNBT(inventory);
-                return handler.getStackInSlot(CookingPotBlockEntity.OUTPUT_SLOT);
+                return handler.getStackInSlot(CookingPotBlockEntity.MEAL_DISPLAY_SLOT);
             }
         }
         return ItemStack.EMPTY;
