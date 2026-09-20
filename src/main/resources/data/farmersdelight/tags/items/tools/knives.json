@@ -1,9 +1,10 @@
 {
+  "replace": false,
   "values": [
-    "witherstorm_delight:flint_command_block_knife",
-    "witherstorm_delight:gold_command_block_knife",
-    "witherstorm_delight:iron_command_block_knife",
     "witherstorm_delight:command_block_knife",
+    "witherstorm_delight:flint_command_block_knife",
+    "witherstorm_delight:iron_command_block_knife",
+    "witherstorm_delight:gold_command_block_knife",
     "witherstorm_delight:netherite_command_block_knife"
   ]
 }
