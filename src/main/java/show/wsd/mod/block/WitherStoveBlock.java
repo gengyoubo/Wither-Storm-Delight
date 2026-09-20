@@ -21,7 +21,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import show.wsd.mod.block.entity.WitherStoveBlockEntity;
 import show.wsd.mod.init.ModOther;
 import vectorwing.farmersdelight.common.block.StoveBlock;
-import vectorwing.farmersdelight.common.block.entity.StoveBlockEntity;
 import vectorwing.farmersdelight.common.registry.ModSounds;
 
 public class WitherStoveBlock extends StoveBlock {
@@ -36,14 +35,14 @@ public class WitherStoveBlock extends StoveBlock {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return ModOther.WITHER_STOVE_BE.get().create(pos, state);
+        return new WitherStoveBlockEntity(pos, state);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide) {
             if (state.getValue(LIT)) {
-                return createTickerHelper(type, ModOther.WITHER_STOVE_BE.get(), StoveBlockEntity::particleTick);
+                return createTickerHelper(type, ModOther.WITHER_STOVE_BE.get(), WitherStoveBlockEntity::particleTick);
             }
             return null;
         }

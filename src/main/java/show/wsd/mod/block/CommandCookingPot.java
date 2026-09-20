@@ -18,7 +18,7 @@ public class CommandCookingPot extends CookingPotBlock {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return ModOther.COMMAND_COOKING_POT_BE.get().create(pos, state);
+        return new CommandCookingPotBlockEntity(pos, state);
     }
 
     @Override

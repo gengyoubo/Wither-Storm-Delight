@@ -17,7 +17,6 @@ import vectorwing.farmersdelight.client.renderer.DefaultStoveRenderer;
 
 
 @Mod(WitherStormDelightMod.MOD_ID)
-@Mod.EventBusSubscriber(modid = WitherStormDelightMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class WitherStormDelightMod {
     public static final String MOD_ID = "witherstorm_delight";
     public static final Rarity COMMAND = Rarity.create("COMMAND", ChatFormatting.RED);

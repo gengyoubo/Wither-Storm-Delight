@@ -151,6 +151,10 @@ public class WitheredRiceBlock extends BushBlock implements BonemealableBlock, L
         if (upperState.getBlock() instanceof WitheredRicePaniclesBlock) {
             return !((WitheredRicePaniclesBlock) upperState.getBlock()).isMaxAge(upperState);
         }
+        if (this.isMaxAge(state)) {
+            return upperState.isAir()
+                    && ModBlock.WITHERED_RICE_CROP_PANICLES.get().defaultBlockState().canSurvive(level, pos.above());
+        }
         return true;
     }
 
