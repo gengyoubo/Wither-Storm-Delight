@@ -12,6 +12,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import show.wsd.mod.WitherStormDelightMod;
 import show.wsd.mod.block.entity.CommandCookingPotBlockEntity;
+import show.wsd.mod.block.entity.WitherStoveBlockEntity;
 
 public class ModOther {
     public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, WitherStormDelightMod.MOD_ID);
@@ -22,6 +23,9 @@ public class ModOther {
 
     public static final RegistryObject<BlockEntityType<CommandCookingPotBlockEntity>> COMMAND_COOKING_POT_BE = BLOCK_ENTITY_TYPES.register("command_cooking_pot",
             () -> BlockEntityType.Builder.of(CommandCookingPotBlockEntity::new, ModBlock.COMMAND_COOKING_POT.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<WitherStoveBlockEntity>> WITHER_STOVE_BE = BLOCK_ENTITY_TYPES.register("wither_stove",
+            () -> BlockEntityType.Builder.of(WitherStoveBlockEntity::new, ModBlock.WITHER_STOVE.get()).build(null));
 
     public static final RegistryObject<CreativeModeTab> MOD_TAB = TABS.register("item",
             () -> CreativeModeTab.builder()
