@@ -57,19 +57,17 @@ public class WitheredRiceBlock extends BushBlock implements BonemealableBlock, L
         if (!level.isAreaLoaded(pos, 1)) return;
         if (level.getRawBrightness(pos.above(), 0) >= 6) {
             int age = this.getAge(state);
-            if (age <= this.getMaxAge()) {
-                float chance = 10;
-                if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(level, pos, state, random.nextInt((int) (25.0F / chance) + 1) == 0)) {
-                    if (age == this.getMaxAge()) {
-                        WitheredRicePaniclesBlock riceUpper = (WitheredRicePaniclesBlock) ModBlock.WITHERED_RICE_CROP_PANICLES.get();
-                        if (riceUpper.defaultBlockState().canSurvive(level, pos.above()) && level.isEmptyBlock(pos.above())) {
-                            level.setBlockAndUpdate(pos.above(), riceUpper.defaultBlockState());
-                            net.minecraftforge.common.ForgeHooks.onCropsGrowPost(level, pos, state);
-                        }
-                    } else {
-                        level.setBlock(pos, this.withAge(age + 1), 2);
+            float chance = 10;
+            if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(level, pos, state, random.nextInt((int) (25.0F / chance) + 1) == 0)) {
+                if (age == this.getMaxAge()) {
+                    WitheredRicePaniclesBlock riceUpper = (WitheredRicePaniclesBlock) ModBlock.WITHERED_RICE_CROP_PANICLES.get();
+                    if (riceUpper.defaultBlockState().canSurvive(level, pos.above()) && level.isEmptyBlock(pos.above())) {
+                        level.setBlockAndUpdate(pos.above(), riceUpper.defaultBlockState());
                         net.minecraftforge.common.ForgeHooks.onCropsGrowPost(level, pos, state);
                     }
+                } else {
+                    level.setBlock(pos, this.withAge(age + 1), 2);
+                    net.minecraftforge.common.ForgeHooks.onCropsGrowPost(level, pos, state);
                 }
             }
         }

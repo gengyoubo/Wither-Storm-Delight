@@ -156,7 +156,7 @@ public class WitheredTomatoVineBlock extends CropBlock {
 
     @Override
     protected int getBonemealAgeIncrease(Level level) {
-        return super.getBonemealAgeIncrease(level) / 2;
+        return Math.max(1, super.getBonemealAgeIncrease(level) / 2);
     }
 
     @Override
