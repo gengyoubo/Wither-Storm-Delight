@@ -23,7 +23,7 @@ public class ModBlock {
     public static final RegistryObject<Block> WITHER_STOVE = BLOCKS.register("wither_stove", WitherStoveBlock::new);
 
     public static final RegistryObject<Block> COMMAND_COOKING_POT = BLOCKS.register("command_cooking_pot",
-            () -> new CookingPotBlock(BlockBehaviour.Properties.of()
+            () -> new CommandCookingPot(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.METAL)
                     .strength(0.7F, 6.0F)
                     .sound(SoundType.NETHERITE_BLOCK)));

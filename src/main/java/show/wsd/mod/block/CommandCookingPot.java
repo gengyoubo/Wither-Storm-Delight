@@ -1,30 +1,31 @@
 package show.wsd.mod.block;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.CampfireBlock;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.material.MapColor;
-import show.wsd.mod.init.ModParticleType;
+import show.wsd.mod.block.entity.CommandCookingPotBlockEntity;
+import show.wsd.mod.init.ModOther;
 import vectorwing.farmersdelight.common.block.CookingPotBlock;
-import vectorwing.farmersdelight.common.block.StoveBlock;
-import vectorwing.farmersdelight.common.registry.ModParticleTypes;
-import vectorwing.farmersdelight.common.registry.ModSounds;
+import vectorwing.farmersdelight.common.block.entity.CookingPotBlockEntity;
 
 public class CommandCookingPot extends CookingPotBlock {
-
-    public CommandCookingPot() {
-        super(Properties.of().sound(SoundType.NETHERITE_BLOCK).mapColor(MapColor.METAL).lightLevel(s -> 7).strength(0.5F, 6.0F));
+    public CommandCookingPot(Properties properties) {
+        super(properties);
     }
 
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return ModOther.COMMAND_COOKING_POT_BE.get().create(pos, state);
+    }
+
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        if (level.isClientSide) {
+            return createTickerHelper(type, ModOther.COMMAND_COOKING_POT_BE.get(), CookingPotBlockEntity::animationTick);
+        }
+        return createTickerHelper(type, ModOther.COMMAND_COOKING_POT_BE.get(), CookingPotBlockEntity::cookingTick);
+    }
 }

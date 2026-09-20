@@ -1,15 +1,27 @@
 package show.wsd.mod.init;
 
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import show.wsd.mod.WitherStormDelightMod;
+import show.wsd.mod.block.entity.CommandCookingPotBlockEntity;
 
-public class ModTab {
+public class ModOther {
     public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, WitherStormDelightMod.MOD_ID);
+
+    public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, WitherStormDelightMod.MOD_ID);
+
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, WitherStormDelightMod.MOD_ID);
+
+    public static final RegistryObject<BlockEntityType<CommandCookingPotBlockEntity>> COMMAND_COOKING_POT_BE = BLOCK_ENTITY_TYPES.register("command_cooking_pot",
+            () -> BlockEntityType.Builder.of(CommandCookingPotBlockEntity::new, ModBlock.COMMAND_COOKING_POT.get()).build(null));
 
     public static final RegistryObject<CreativeModeTab> MOD_TAB = TABS.register("item",
             () -> CreativeModeTab.builder()
@@ -76,4 +88,7 @@ public class ModTab {
                         output.accept(ModItem.COOKED_ZOMBIE_BLOCK.get());
                         output.accept(ModItem.COOKED_ZOMBIE.get());
                     }).build());
+
+    public static final RegistryObject<SimpleParticleType> WIRHER_FLAME = PARTICLE_TYPES.register("wither_flame",
+            () -> new SimpleParticleType(false));
 }

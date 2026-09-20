@@ -4,11 +4,6 @@
   "package": "show.wsd.mod.mixin",
   "compatibilityLevel": "JAVA_17",
   "refmap": "witherstorm_delight.refmap.json",
-  "mixins": [
-    "CookingPotBlockEntityMixin",
-    "CookingPotMenuMixin"
-  ],
-  "client": [
-    "ItemRendererMixin"
-  ]
+  "mixins": [],
+  "client": []
 }
