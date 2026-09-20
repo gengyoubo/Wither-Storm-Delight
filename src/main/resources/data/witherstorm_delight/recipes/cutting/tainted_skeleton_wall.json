@@ -19,7 +19,13 @@
       "item": "minecraft:skeleton_skull"
     }
   ],
-  "tool": {
-    "tag": "forge:tools/knives"
-  }
+  "tool": [
+    {
+      "type": "farmersdelight:tool_action",
+      "action": "knife_dig"
+    },
+    {
+      "tag": "forge:tools/knives"
+    }
+  ]
 }

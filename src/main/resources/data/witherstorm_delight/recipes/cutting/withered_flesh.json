@@ -11,7 +11,13 @@
       "item": "witherstorm_delight:minced_withered_flesh"
     }
   ],
-  "tool": {
-    "tag": "forge:tools/knives"
-  }
+  "tool": [
+    {
+      "type": "farmersdelight:tool_action",
+      "action": "knife_dig"
+    },
+    {
+      "tag": "forge:tools/knives"
+    }
+  ]
 }
