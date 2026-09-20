@@ -51,33 +51,38 @@
       ],
       "entries": [
         {
-          "type": "minecraft:item",
-          "functions": [
+          "type": "minecraft:group",
+          "children": [
             {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 2.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ],
-          "name": "witherstormmod:withered_flesh"
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
+              "type": "minecraft:item",
+              "functions": [
+                {
+                  "add": false,
+                  "count": {
+                    "type": "minecraft:uniform",
+                    "max": 2.0,
+                    "min": 1.0
+                  },
+                  "function": "minecraft:set_count"
+                }
+              ],
+              "name": "witherstormmod:withered_flesh"
+            },
             {
-              "add": false,
-              "count": 1.0,
-              "function": "minecraft:set_count"
+              "type": "minecraft:item",
+              "functions": [
+                {
+                  "add": false,
+                  "count": 1.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
+              "name": "witherstormmod:withered_bone"
             }
-          ],
-          "name": "witherstormmod:withered_bone"
+          ]
         }
       ],
-      "rolls": 2.0
+      "rolls": 1.0
     }
   ],
   "random_sequence": "witherstormmod:blocks/tainted_zombie_wall"
