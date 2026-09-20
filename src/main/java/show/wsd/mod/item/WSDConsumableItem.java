@@ -48,8 +48,9 @@ public class WSDConsumableItem extends Item {
 
         ItemStack containerStack = stack.getCraftingRemainingItem();
 
+        ItemStack result = stack;
         if (stack.isEdible()) {
-            super.finishUsingItem(stack, level, consumer);
+            result = super.finishUsingItem(stack, level, consumer);
         } else {
             Player player = consumer instanceof Player ? (Player) consumer : null;
             if (player instanceof ServerPlayer) {
@@ -63,15 +64,15 @@ public class WSDConsumableItem extends Item {
             }
         }
 
-        if (stack.isEmpty()) {
+        if (result.isEmpty()) {
             return containerStack;
         } else {
-            if (consumer instanceof Player player && !((Player) consumer).getAbilities().instabuild) {
+            if (!containerStack.isEmpty() && consumer instanceof Player player && !player.getAbilities().instabuild) {
                 if (!player.getInventory().add(containerStack)) {
                     player.drop(containerStack, false);
                 }
             }
-            return stack;
+            return result;
         }
     }
 

@@ -7,7 +7,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.util.thread.SidedThreadGroups;
 import show.wsd.mod.init.ModBlock;
 import show.wsd.mod.init.ModItem;
 import show.wsd.mod.init.ModParticleType;
@@ -15,9 +14,6 @@ import show.wsd.mod.init.ModTab;
 import show.wsd.mod.util.AddValidBlockUtil;
 import vectorwing.farmersdelight.common.registry.ModBlockEntityTypes;
 
-import java.util.AbstractMap;
-import java.util.Collection;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 @Mod(WitherStormDelightMod.MOD_ID)
 @Mod.EventBusSubscriber(modid = WitherStormDelightMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -25,7 +21,6 @@ public class WitherStormDelightMod {
     public static final String MOD_ID = "witherstorm_delight";
     public static final Rarity COMMAND = Rarity.create("COMMAND", ChatFormatting.RED);
     public static final Rarity SYMBIONT = Rarity.create("SYMBIONT", ChatFormatting.DARK_PURPLE);
-    private static final Collection<AbstractMap.SimpleEntry<Runnable, Integer>> workQueue = new ConcurrentLinkedQueue<>();
     @SuppressWarnings("removal")
     public WitherStormDelightMod() {
         IEventBus modbus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -41,10 +36,5 @@ public class WitherStormDelightMod {
             AddValidBlockUtil.addBlock(ModBlockEntityTypes.STOVE.get(), ModBlock.WITHER_STOVE.get());
             AddValidBlockUtil.addBlock(ModBlockEntityTypes.COOKING_POT.get(), ModBlock.COMMAND_COOKING_POT.get());
         });
-    }
-
-    public static void queueServerWork(int tick, Runnable action) {
-        if (Thread.currentThread().getThreadGroup() == SidedThreadGroups.SERVER)
-            workQueue.add(new AbstractMap.SimpleEntry<>(action, tick));
     }
 }

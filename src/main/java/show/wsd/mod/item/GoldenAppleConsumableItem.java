@@ -47,33 +47,31 @@ public class GoldenAppleConsumableItem extends GoldenAppleStewItem {
             this.affectConsumer(stack, level, consumer);
         }
 
-        ItemStack containerStack = stack.getCraftingRemainingItem();
-
         if (stack.isEdible()) {
-            super.finishUsingItem(stack, level, consumer);
-        } else {
-            Player player = consumer instanceof Player ? (Player) consumer : null;
-            if (player instanceof ServerPlayer) {
-                CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, stack);
-            }
-            if (player != null) {
-                player.awardStat(Stats.ITEM_USED.get(this));
-                if (!player.getAbilities().instabuild) {
-                    stack.shrink(1);
-                }
-            }
+            return super.finishUsingItem(stack, level, consumer);
         }
 
+        ItemStack containerStack = stack.getCraftingRemainingItem();
+        Player player = consumer instanceof Player ? (Player) consumer : null;
+        if (player instanceof ServerPlayer) {
+            CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, stack);
+        }
+        if (player != null) {
+            player.awardStat(Stats.ITEM_USED.get(this));
+            if (!player.getAbilities().instabuild) {
+                stack.shrink(1);
+            }
+        }
         if (stack.isEmpty()) {
             return containerStack;
-        } else {
-            if (consumer instanceof Player player && !((Player) consumer).getAbilities().instabuild) {
-                if (!player.getInventory().add(containerStack)) {
-                    player.drop(containerStack, false);
-                }
-            }
-            return stack;
         }
+
+        if (!containerStack.isEmpty() && player != null && !player.getAbilities().instabuild) {
+            if (!player.getInventory().add(containerStack)) {
+                player.drop(containerStack, false);
+            }
+        }
+        return stack;
     }
 
     /**
