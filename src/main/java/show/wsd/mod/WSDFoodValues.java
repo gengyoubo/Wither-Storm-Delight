@@ -22,7 +22,6 @@ public class WSDFoodValues {
             .nutrition(22).saturationMod(1.4f)
             .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, BRIEF_DURATION, 0), 1.0F)
             .effect(() -> new MobEffectInstance(ModEffects.NOURISHMENT.get(), LONG_DURATION, 0), 1.0F)
-            .effect(() -> new MobEffectInstance(ModEffects.NOURISHMENT.get(), LONG_DURATION, 0), 1.0F)
             .build();
 
     public static final FoodProperties STORM_DINNER = new FoodProperties.Builder()

@@ -44,40 +44,43 @@ public class StuffedCommandBlockBlock extends FeastBlock {
     }
 
     protected InteractionResult takeServing(LevelAccessor levelacc, BlockPos pos, BlockState state, Player player, InteractionHand hand) {
-        int servings = state.getValue(getServingsProperty());
-
-        if (servings == 1) {
-            levelacc.playSound(null, pos, WitherStormModSoundEvents.COMMAND_BLOCK_DEATH.get(), SoundSource.PLAYERS, 0.5F, 0.5F);
-            levelacc.destroyBlock(pos, true);
-            ItemEntity itemEntity = new ItemEntity((Level) levelacc, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, WitherStormModItems.COMMAND_BLOCK_BOOK.get().getDefaultInstance());
-            itemEntity.setPickUpDelay(10);
-            levelacc.addFreshEntity(itemEntity);
-
+        if (!(levelacc instanceof Level level)) {
+            return InteractionResult.PASS;
+        }
+        if (level.isClientSide) {
             return InteractionResult.SUCCESS;
-
         }
 
+        int servings = state.getValue(getServingsProperty());
         ItemStack serving = this.getServingItem(state);
         ItemStack heldStack = player.getItemInHand(hand);
 
         if (servings > 0) {
             if (!serving.hasCraftingRemainingItem() || ItemStack.isSameItem(heldStack, serving.getCraftingRemainingItem())) {
-                levelacc.setBlock(pos, state.setValue(getServingsProperty(), servings - 1), 3);
+                boolean isLastServing = servings == 1;
+                if (isLastServing) {
+                    level.removeBlock(pos, false);
+                } else {
+                    level.setBlock(pos, state.setValue(getServingsProperty(), servings - 1), 3);
+                }
                 if (!player.getAbilities().instabuild && serving.hasCraftingRemainingItem()) {
                     heldStack.shrink(1);
                 }
                 if (!player.getInventory().add(serving)) {
                     player.drop(serving, false);
                 }
-                if (levelacc.getBlockState(pos).getValue(getServingsProperty()) == 0 && !this.hasLeftovers) {
-                    levelacc.removeBlock(pos, false);
+                if (isLastServing) {
+                    level.playSound(null, pos, WitherStormModSoundEvents.COMMAND_BLOCK_DEATH.get(), SoundSource.PLAYERS, 0.5F, 0.5F);
+                    ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+                            WitherStormModItems.COMMAND_BLOCK_BOOK.get().getDefaultInstance());
+                    itemEntity.setPickUpDelay(10);
+                    level.addFreshEntity(itemEntity);
                 }
-                levelacc.playSound(null, pos, WitherStormModSoundEvents.COMMAND_BLOCK_ACTIVATES.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.playSound(null, pos, WitherStormModSoundEvents.COMMAND_BLOCK_ACTIVATES.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
                 return InteractionResult.SUCCESS;
             } else {
                 player.displayClientMessage(TextUtils.getTranslation("block.feast.use_container", serving.getCraftingRemainingItem().getHoverName()), true);
-                levelacc.playSound(null, pos, WitherStormModSoundEvents.COMMAND_BLOCK_HIT.get(), SoundSource.BLOCKS, 0.5F, 1.0F);
-
+                level.playSound(null, pos, WitherStormModSoundEvents.COMMAND_BLOCK_HIT.get(), SoundSource.BLOCKS, 0.5F, 1.0F);
             }
         }
         return InteractionResult.PASS;
