@@ -25,7 +25,7 @@ public class WitherStoveBlock extends StoveBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     public WitherStoveBlock() {
-        super(BlockBehaviour.Properties.of().sound(SoundType.NETHERITE_BLOCK).lightLevel(s -> 15).strength(2f, 5f).requiresCorrectToolForDrops());
+        super(BlockBehaviour.Properties.of().sound(SoundType.NETHERITE_BLOCK).lightLevel(s -> s.getValue(LIT) ? 15 : 0).strength(2f, 5f).requiresCorrectToolForDrops());
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, false));
     }
 

@@ -30,7 +30,9 @@ public class FormidifriedEgg extends Item {
     @Override
     public ItemStack finishUsingItem(ItemStack itemstack, Level world, LivingEntity entity) {
         ItemStack retval = super.finishUsingItem(itemstack, world, entity);
-        entity.addEffect(new MobEffectInstance(ModEffects.NOURISHMENT.get(), 288000, 1, false, true));
+        if (!world.isClientSide) {
+            entity.addEffect(new MobEffectInstance(ModEffects.NOURISHMENT.get(), 288000, 1, false, true));
+        }
         return retval;
     }
 

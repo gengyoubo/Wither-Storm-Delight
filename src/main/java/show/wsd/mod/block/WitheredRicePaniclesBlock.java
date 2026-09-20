@@ -56,7 +56,7 @@ public class WitheredRicePaniclesBlock extends CropBlock {
 
     @Override
     protected int getBonemealAgeIncrease(Level level) {
-        return super.getBonemealAgeIncrease(level) / 3;
+        return Math.max(1, super.getBonemealAgeIncrease(level) / 3);
     }
 
     @Override

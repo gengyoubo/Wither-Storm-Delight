@@ -62,7 +62,6 @@ public class ModTab {
                         output.accept(ModItem.WITHERED_BONE_BROTH.get());
                         output.accept(ModItem.COOKED_RICE.get());
                         output.accept(ModItem.FRIED_RICE.get());
-                        output.accept(ModItem.STORM_SANDWICH.get());
                         output.accept(ModItem.EYES_PORRIDGE.get());
                         output.accept(ModItem.BIG_MAC_BURGER_BLOCK.get());
                         output.accept(ModItem.BIG_MAC_BURGER.get());
