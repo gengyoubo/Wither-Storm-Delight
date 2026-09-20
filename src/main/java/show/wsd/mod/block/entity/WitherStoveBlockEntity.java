@@ -13,6 +13,11 @@ import vectorwing.farmersdelight.common.block.AbstractStoveBlock;
 import vectorwing.farmersdelight.common.block.entity.AbstractStoveBlockEntity;
 
 public class WitherStoveBlockEntity extends AbstractStoveBlockEntity {
+    private static final Vec2[] OFFSETS = {
+            new Vec2(0.3F, 0.2F), new Vec2(0.0F, 0.2F), new Vec2(-0.3F, 0.2F),
+            new Vec2(0.3F, -0.2F), new Vec2(0.0F, -0.2F), new Vec2(-0.3F, -0.2F)
+    };
+
     public WitherStoveBlockEntity(BlockPos pos, BlockState state) {
         super(
                 ModOther.WITHER_STOVE_BE.get(),
@@ -65,10 +70,6 @@ public class WitherStoveBlockEntity extends AbstractStoveBlockEntity {
 
     @Override
     public Vec2 getStoveItemOffset(int index) {
-        Vec2[] offsets = {
-                new Vec2(0.3F, 0.2F), new Vec2(0.0F, 0.2F), new Vec2(-0.3F, 0.2F),
-                new Vec2(0.3F, -0.2F), new Vec2(0.0F, -0.2F), new Vec2(-0.3F, -0.2F)
-        };
-        return offsets[index];
+        return OFFSETS[index];
     }
 }
