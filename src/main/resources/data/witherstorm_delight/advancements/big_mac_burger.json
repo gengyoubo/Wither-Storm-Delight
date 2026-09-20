@@ -24,8 +24,7 @@
               "witherstorm_delight:big_mac_burger_block"
             ],
             "count": {
-              "min": 1,
-              "max": 64
+              "min": 1
             }
           }
         ]

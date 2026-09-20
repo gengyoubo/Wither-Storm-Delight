@@ -24,8 +24,7 @@
               "witherstorm_delight:tainted_cabinet"
             ],
             "count": {
-              "min": 1,
-              "max": 64
+              "min": 1
             }
           }
         ]

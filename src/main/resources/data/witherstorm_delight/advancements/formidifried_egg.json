@@ -24,8 +24,7 @@
               "witherstorm_delight:formidifried_egg"
             ],
             "count": {
-              "min": 1,
-              "max": 64
+              "min": 1
             }
           }
         ]

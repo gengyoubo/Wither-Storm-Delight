@@ -24,8 +24,7 @@
               "witherstorm_delight:the_eye_of_symbiont"
             ],
             "count": {
-              "min": 1,
-              "max": 64
+              "min": 1
             }
           }
         ]
